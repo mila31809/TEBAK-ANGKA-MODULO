@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tebak Angka</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tebak Angka</h1>
+        <p>Tebak angka antara 1 dan 100:</p>
+        <input type="number" id="guess" required>
+        <button onclick="checkGuess()">Kirim</button>
+        <div id="message" class="message"></div>
+        <div id="attempts" class="attempts"></div>
+    </div>
+
+    <script>
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guess').value);
+            attempts++;
+
+            let message = '';
+            if (guess < secretNumber) {
+                message = "Tebakan Anda terlalu kecil.";
+            } else if (guess > secretNumber) {
+                const remainder = guess % secretNumber;
+                message = `Tebakan Anda terlalu besar. Sisa pembagian tebakan Anda dengan angka yang benar adalah: ${remainder}.`;
+            } else {
+                message = `Selamat! Anda telah menebak angka yang benar: ${secretNumber} dalam ${attempts} percobaan.`;
+                // Reset permainan
+                secretNumber = Math.floor(Math.random() * 100) + 1;
+                attempts = 0;
+            }
+
+            document.getElementById('message').innerText = message;
+            document.getElementById('attempts').innerText = `Percobaan: ${attempts}`;
+        }
+    </script>
+</body>
+</html>
